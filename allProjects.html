@@ -1,0 +1,1281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Projects — Aman Srivastava</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+        :root {
+            --os-bg: #0b0f1a;
+            --os-taskbar: #0d1117;
+            --os-window: #111827;
+            --os-window-border: rgba(255, 118, 19, .18);
+            --os-titlebar: #161e2e;
+            --orange: #ff7613;
+            --orange2: #ff9a4d;
+            --orange-dim: rgba(255, 118, 19, .12);
+            --text: #e2e8f0;
+            --muted: #64748b;
+            --green: #22c55e;
+            --blue: #3b82f6;
+            --cyan: #22d3ee;
+            --font-head: 'Syne', sans-serif;
+            --font-body: 'DM Sans', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+            overflow-x: hidden
+        }
+
+        body {
+            background: var(--os-bg);
+            color: var(--text);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+            cursor: none
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none
+        }
+
+        img {
+            max-width: 100%;
+            display: block
+        }
+
+        ::-webkit-scrollbar {
+            width: 4px
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--os-bg)
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--orange);
+            border-radius: 4px
+        }
+
+        /* cursor */
+        .cursor-dot,
+        .cursor-ring {
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%)
+        }
+
+        .cursor-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--orange)
+        }
+
+        .cursor-ring {
+            width: 30px;
+            height: 30px;
+            border: 1.5px solid var(--orange);
+            opacity: .5;
+            transition: width .15s, height .15s
+        }
+
+        /* topbar */
+        #topbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 32px;
+            background: rgba(13, 17, 23, .96);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 118, 19, .1);
+            display: flex;
+            align-items: center;
+            padding: 0 1.25rem;
+            z-index: 200;
+            gap: .5rem;
+            font-family: var(--font-mono);
+            font-size: .7rem
+        }
+
+        .topbar-logo {
+            color: var(--orange);
+            font-weight: 600;
+            letter-spacing: .06em;
+            margin-right: .75rem
+        }
+
+        .topbar-sep {
+            width: 1px;
+            height: 14px;
+            background: rgba(255, 255, 255, .08);
+            margin: 0 .5rem
+        }
+
+        .topbar-item {
+            color: var(--muted);
+            cursor: pointer;
+            transition: color .2s;
+            padding: 0 .3rem;
+            border-radius: 3px;
+            text-decoration: none
+        }
+
+        .topbar-item:hover {
+            color: var(--text);
+            background: rgba(255, 255, 255, .04)
+        }
+
+        .topbar-right {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: .5rem
+        }
+
+        .topbar-time {
+            color: var(--muted);
+            font-size: .68rem
+        }
+
+        .topbar-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--green);
+            box-shadow: 0 0 6px var(--green)
+        }
+
+        /* grid bg */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: linear-gradient(rgba(255, 118, 19, .025) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 118, 19, .025) 1px, transparent 1px);
+            background-size: 48px 48px;
+            pointer-events: none;
+            z-index: 0
+        }
+
+        /* page wrapper */
+        .page {
+            position: relative;
+            z-index: 1;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 5.5rem 2rem 6rem
+        }
+
+        /* breadcrumb */
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+            font-family: var(--font-mono);
+            font-size: .72rem;
+            color: var(--muted);
+            margin-bottom: 2.5rem
+        }
+
+        .breadcrumb a {
+            color: var(--orange);
+            transition: opacity .2s
+        }
+
+        .breadcrumb a:hover {
+            opacity: .7
+        }
+
+        .breadcrumb .sep {
+            color: rgba(100, 116, 139, .4)
+        }
+
+        /* page header */
+        .page-header {
+            margin-bottom: 3rem
+        }
+
+        .sec-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem;
+            font-family: var(--font-mono);
+            font-size: .68rem;
+            color: var(--orange);
+            text-transform: uppercase;
+            letter-spacing: .1em;
+            margin-bottom: .75rem
+        }
+
+        .sec-tag::before {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 1px;
+            background: var(--orange)
+        }
+
+        .page-title {
+            font-family: var(--font-head);
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            font-weight: 800;
+            color: var(--text);
+            line-height: 1.1;
+            letter-spacing: -.02em
+        }
+
+        .page-title .acc {
+            color: var(--orange)
+        }
+
+        .page-sub {
+            margin-top: 1rem;
+            color: var(--muted);
+            font-size: 1rem;
+            line-height: 1.7;
+            max-width: 540px
+        }
+
+        /* filter bar */
+        .filter-bar {
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+            padding: .75rem 1rem;
+            background: var(--os-window);
+            border: 1px solid rgba(255, 255, 255, .06);
+            border-radius: 12px
+        }
+
+        .filter-label {
+            font-family: var(--font-mono);
+            font-size: .65rem;
+            color: var(--muted);
+            margin-right: .5rem
+        }
+
+        .filter-btn {
+            padding: .35rem .9rem;
+            border-radius: 6px;
+            font-family: var(--font-mono);
+            font-size: .68rem;
+            color: var(--muted);
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, .07);
+            cursor: pointer;
+            transition: all .2s
+        }
+
+        .filter-btn:hover {
+            color: var(--text);
+            border-color: rgba(255, 118, 19, .3)
+        }
+
+        .filter-btn.active {
+            background: rgba(255, 118, 19, .12);
+            color: var(--orange);
+            border-color: rgba(255, 118, 19, .3)
+        }
+
+        .filter-count {
+            margin-left: auto;
+            font-family: var(--font-mono);
+            font-size: .65rem;
+            color: var(--muted)
+        }
+
+        .filter-count span {
+            color: var(--orange)
+        }
+
+        /* projects grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem
+        }
+
+        /* project card */
+        .proj-card {
+            background: var(--os-window);
+            border: 1px solid rgba(255, 255, 255, .06);
+            border-radius: 20px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: border-color .3s, transform .3s, box-shadow .3s;
+            position: relative
+        }
+
+        .proj-card:hover {
+            border-color: rgba(255, 118, 19, .3);
+            transform: translateY(-6px);
+            box-shadow: 0 24px 60px rgba(0, 0, 0, .4)
+        }
+
+        .proj-card[data-hide="true"] {
+            display: none
+        }
+
+        /* card screen mockup */
+        .card-screen {
+            position: relative
+        }
+
+        .card-browser {
+            background: #0d1117;
+            border-bottom: 1px solid rgba(255, 255, 255, .05)
+        }
+
+        .card-browser-bar {
+            padding: .45rem .75rem;
+            display: flex;
+            align-items: center;
+            gap: .4rem
+        }
+
+        .cb-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%
+        }
+
+        .cb-url {
+            margin-left: .5rem;
+            flex: 1;
+            background: rgba(255, 255, 255, .04);
+            border-radius: 4px;
+            padding: .12rem .55rem;
+            font-family: var(--font-mono);
+            font-size: .6rem;
+            color: var(--muted);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap
+        }
+
+        .cb-secure {
+            font-family: var(--font-mono);
+            font-size: .58rem;
+            color: var(--green);
+            margin-left: .4rem;
+            display: flex;
+            align-items: center;
+            gap: .25rem
+        }
+
+        .card-img-wrap {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 16/9
+        }
+
+        .card-img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform .5s ease
+        }
+
+        .proj-card:hover .card-img-wrap img {
+            transform: scale(1.05)
+        }
+
+        .card-img-placeholder {
+            width: 100%;
+            height: 100%;
+            background: var(--os-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-mono);
+            font-size: .7rem;
+            color: var(--muted)
+        }
+
+        /* overlays */
+        .card-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(11, 15, 26, .0);
+            transition: background .3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: .75rem;
+            opacity: 0
+        }
+
+        .proj-card:hover .card-overlay {
+            background: rgba(11, 15, 26, .6);
+            opacity: 1
+        }
+
+        .ov-btn {
+            padding: .5rem 1rem;
+            border-radius: 8px;
+            font-family: var(--font-mono);
+            font-size: .72rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: .4rem;
+            transition: transform .2s, background .2s;
+            cursor: pointer;
+            border: none
+        }
+
+        .ov-btn.live {
+            background: var(--orange);
+            color: #0b0f1a
+        }
+
+        .ov-btn.live:hover {
+            background: var(--orange2);
+            transform: translateY(-2px)
+        }
+
+        .ov-btn.code {
+            background: rgba(255, 255, 255, .1);
+            color: var(--text);
+            border: 1px solid rgba(255, 255, 255, .15)
+        }
+
+        .ov-btn.code:hover {
+            background: rgba(255, 255, 255, .18);
+            transform: translateY(-2px)
+        }
+
+        .ov-btn.disabled {
+            background: rgba(255, 255, 255, .05);
+            color: var(--muted);
+            cursor: not-allowed;
+            border: 1px solid rgba(255, 255, 255, .08)
+        }
+
+        /* coming soon badge */
+        .coming-badge {
+            position: absolute;
+            top: .6rem;
+            right: .6rem;
+            padding: .25rem .75rem;
+            border-radius: 99px;
+            font-family: var(--font-mono);
+            font-size: .6rem;
+            font-weight: 600;
+            color: var(--cyan);
+            border: 1px solid rgba(34, 211, 238, .35);
+            background: rgba(34, 211, 238, .06);
+            letter-spacing: .06em;
+            animation: cpulse 2s ease-in-out infinite
+        }
+
+        @keyframes cpulse {
+
+            0%,
+            100% {
+                opacity: 1
+            }
+
+            50% {
+                opacity: .5
+            }
+        }
+
+        /* status badge */
+        .status-badge {
+            position: absolute;
+            top: .6rem;
+            left: .6rem;
+            padding: .2rem .65rem;
+            border-radius: 99px;
+            font-family: var(--font-mono);
+            font-size: .58rem;
+            font-weight: 600;
+            letter-spacing: .06em
+        }
+
+        .status-live {
+            background: rgba(34, 197, 94, .1);
+            color: #86efac;
+            border: 1px solid rgba(34, 197, 94, .2)
+        }
+
+        .status-wip {
+            background: rgba(251, 191, 36, .08);
+            color: #fcd34d;
+            border: 1px solid rgba(251, 191, 36, .2)
+        }
+
+        /* card body */
+        .card-body {
+            padding: 1.5rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column
+        }
+
+        .card-meta {
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+            margin-bottom: .75rem
+        }
+
+        .card-num {
+            font-family: var(--font-mono);
+            font-size: .62rem;
+            color: rgba(255, 118, 19, .4)
+        }
+
+        .card-cat {
+            font-family: var(--font-mono);
+            font-size: .6rem;
+            color: var(--muted);
+            background: rgba(255, 255, 255, .05);
+            padding: .15rem .5rem;
+            border-radius: 4px
+        }
+
+        .card-title {
+            font-family: var(--font-head);
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: .5rem;
+            line-height: 1.2
+        }
+
+        .card-desc {
+            font-size: .84rem;
+            color: var(--muted);
+            line-height: 1.65;
+            flex: 1;
+            margin-bottom: 1rem
+        }
+
+        .card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .35rem;
+            margin-bottom: 1.1rem
+        }
+
+        .ctag {
+            padding: .2rem .6rem;
+            border-radius: 4px;
+            font-family: var(--font-mono);
+            font-size: .62rem;
+            background: rgba(255, 118, 19, .07);
+            color: var(--orange2);
+            border: 1px solid rgba(255, 118, 19, .14)
+        }
+
+        .card-links {
+            display: flex;
+            gap: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, .05);
+            padding-top: 1rem;
+            margin-top: auto
+        }
+
+        .card-link {
+            display: flex;
+            align-items: center;
+            gap: .35rem;
+            font-family: var(--font-mono);
+            font-size: .72rem;
+            color: var(--orange);
+            transition: color .2s, transform .15s
+        }
+
+        .card-link:hover {
+            color: var(--orange2);
+            transform: translateX(2px)
+        }
+
+        .card-link.disabled {
+            color: var(--muted);
+            pointer-events: none
+        }
+
+        /* featured badge */
+        .featured-badge {
+            position: absolute;
+            top: .6rem;
+            left: .6rem;
+            padding: .2rem .65rem;
+            border-radius: 99px;
+            font-family: var(--font-mono);
+            font-size: .58rem;
+            font-weight: 600;
+            background: rgba(255, 118, 19, .12);
+            color: var(--orange2);
+            border: 1px solid rgba(255, 118, 19, .25);
+            letter-spacing: .06em
+        }
+
+        /* stats row */
+        .stats-row {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            padding: 1.25rem 1.5rem;
+            background: var(--os-window);
+            border: 1px solid rgba(255, 255, 255, .06);
+            border-radius: 12px
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            gap: .2rem
+        }
+
+        .stat-n {
+            font-family: var(--font-head);
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--orange)
+        }
+
+        .stat-l {
+            font-family: var(--font-mono);
+            font-size: .62rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: .06em
+        }
+
+        /* empty state */
+        .empty-state {
+            grid-column: 1/-1;
+            text-align: center;
+            padding: 4rem;
+            font-family: var(--font-mono);
+            color: var(--muted);
+            font-size: .85rem
+        }
+
+        .empty-state .big {
+            font-size: 2.5rem;
+            margin-bottom: 1rem
+        }
+
+        /* back btn */
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem;
+            padding: .55rem 1.2rem;
+            border-radius: 8px;
+            font-family: var(--font-mono);
+            font-size: .78rem;
+            font-weight: 600;
+            color: var(--text);
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, .1);
+            cursor: pointer;
+            transition: all .2s;
+            margin-bottom: 2.5rem;
+            text-decoration: none
+        }
+
+        .back-btn:hover {
+            border-color: var(--orange);
+            color: var(--orange);
+            background: rgba(255, 118, 19, .06)
+        }
+
+        /* dock */
+        #dock {
+            position: fixed;
+            bottom: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(13, 17, 23, .9);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, .08);
+            border-radius: 16px;
+            padding: .5rem .75rem;
+            display: flex;
+            align-items: center;
+            gap: .25rem;
+            z-index: 200
+        }
+
+        .dock-it {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1rem;
+            color: var(--muted);
+            transition: color .2s, background .2s, transform .2s;
+            position: relative;
+            text-decoration: none
+        }
+
+        .dock-it:hover {
+            color: var(--text);
+            background: rgba(255, 255, 255, .06);
+            transform: translateY(-4px) scale(1.15)
+        }
+
+        .dock-it.active {
+            color: var(--orange);
+            background: rgba(255, 118, 19, .1)
+        }
+
+        .dock-it::after {
+            content: attr(data-tip);
+            position: absolute;
+            bottom: calc(100% + 8px);
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1a1e2a;
+            color: var(--text);
+            font-family: var(--font-mono);
+            font-size: .6rem;
+            padding: .2rem .5rem;
+            border-radius: 4px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .15s
+        }
+
+        .dock-it:hover::after {
+            opacity: 1
+        }
+
+        .dock-sep {
+            width: 1px;
+            height: 24px;
+            background: rgba(255, 255, 255, .08);
+            margin: 0 .25rem
+        }
+
+        /* responsive */
+        @media(max-width:1024px) {
+            .projects-grid {
+                grid-template-columns: repeat(2, 1fr)
+            }
+        }
+
+        @media(max-width:640px) {
+            .projects-grid {
+                grid-template-columns: 1fr
+            }
+
+            .stats-row {
+                gap: 1.25rem;
+                flex-wrap: wrap
+            }
+
+            .filter-count {
+                display: none
+            }
+
+            #dock {
+                gap: .1rem;
+                padding: .4rem .5rem
+            }
+
+            .dock-it {
+                width: 34px;
+                height: 34px;
+                font-size: .85rem
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="cursor-dot" id="cDot"></div>
+    <div class="cursor-ring" id="cRing"></div>
+
+    <!-- topbar -->
+    <div id="topbar">
+        <span class="topbar-logo">&#9670; AmanOS</span>
+        <div class="topbar-sep"></div>
+        <a href="../index.html" class="topbar-item">Home</a>
+        <a href="../index.html#skills" class="topbar-item">Skills</a>
+        <a href="#" class="topbar-item" style="color:var(--orange)">Projects</a>
+        <a href="../index.html#services" class="topbar-item">Services</a>
+        <a href="../index.html#contact" class="topbar-item">Contact</a>
+        <div class="topbar-right">
+            <div class="topbar-dot"></div>
+            <span class="topbar-time" id="topTime">--:--</span>
+        </div>
+    </div>
+
+    <!-- main -->
+    <div class="page">
+
+        <!-- back + breadcrumb -->
+        <a href="../index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Home</a>
+        <div class="breadcrumb">
+            <a href="../index.html">AmanOS</a>
+            <span class="sep">/</span>
+            <a href="../index.html">home</a>
+            <span class="sep">/</span>
+            <span style="color:var(--text)">projects</span>
+        </div>
+
+        <!-- header -->
+        <div class="page-header" data-aos="fade-up">
+            <div class="sec-tag">~/projects</div>
+            <h1 class="page-title">All <span class="acc">Projects</span></h1>
+            <p class="page-sub">Every build — from client work to personal experiments. Each one a problem solved, a
+                skill sharpened.</p>
+        </div>
+
+        <!-- stats -->
+        <div class="stats-row" data-aos="fade-up">
+            <div class="stat-item">
+                <div class="stat-n" id="totalCount">0</div>
+                <div class="stat-l">Total Projects</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-n" style="color:var(--green)">2</div>
+                <div class="stat-l">Live Sites</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-n" style="color:var(--cyan)">1</div>
+                <div class="stat-l">In Progress</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-n" style="color:var(--blue)">3+</div>
+                <div class="stat-l">Tech Stacks</div>
+            </div>
+        </div>
+
+        <!-- filter bar -->
+        <div class="filter-bar" data-aos="fade-up">
+            <span class="filter-label">Filter:</span>
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="fullstack">Full Stack</button>
+            <button class="filter-btn" data-filter="frontend">Frontend</button>
+            <button class="filter-btn" data-filter="ecommerce">E-Commerce</button>
+            <button class="filter-btn" data-filter="wip">In Progress</button>
+            <span class="filter-count">Showing <span id="showCount">0</span> projects</span>
+        </div>
+
+        <!-- grid -->
+        <div class="projects-grid" id="projectsGrid">
+
+            <!-- PROJECT 1 -->
+            <div class="proj-card" data-cat="fullstack,ecommerce" data-aos="fade-up">
+                <div class="card-screen">
+                    <div class="card-browser">
+                        <div class="card-browser-bar">
+                            <span class="cb-dot" style="background:#ff5f57"></span>
+                            <span class="cb-dot" style="background:#febc2e"></span>
+                            <span class="cb-dot" style="background:#28c840"></span>
+                            <span class="cb-url">himspices.com</span>
+                            <span class="cb-secure"><i class="fas fa-lock" style="font-size:.5rem"></i> Secure</span>
+                        </div>
+                    </div>
+                    <div class="card-img-wrap">
+                        <img src="../assets/projects/Project1.png" alt="Himvati Foods"
+                            onerror="this.parentElement.innerHTML='<div class=\'card-img-placeholder\'>&#127778; himvati foods</div>'" />
+                        <div class="card-overlay">
+                            <a href="https://www.himspices.com" target="_blank" class="ov-btn live"><i
+                                    class="fas fa-external-link-alt"></i> Live</a>
+                            <a href="https://github.com/himvatifoods/Himvati-Foods-Pvt.-Ltd" target="_blank"
+                                class="ov-btn code"><i class="fab fa-github"></i> Code</a>
+                        </div>
+                        <span class="status-badge status-live">&#9679; Live</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="card-meta">
+                        <span class="card-num">01</span>
+                        <span class="card-cat">E-Commerce</span>
+                    </div>
+                    <div class="card-title">Himvati Foods Pvt Ltd</div>
+                    <p class="card-desc">Full-stack e-commerce platform for a spice brand. Features product catalog,
+                        dynamic cart, admin panel, and WhatsApp order integration. Built for real customers with live
+                        orders.</p>
+                    <div class="card-tags">
+                        <span class="ctag">React</span><span class="ctag">Node.js</span><span
+                            class="ctag">MongoDB</span><span class="ctag">Express</span><span class="ctag">REST
+                            API</span>
+                    </div>
+                    <div class="card-links">
+                        <a href="https://www.himspices.com" target="_blank" class="card-link"><i
+                                class="fas fa-external-link-alt"></i> Live Site</a>
+                        <a href="https://github.com/himvatifoods/Himvati-Foods-Pvt.-Ltd" target="_blank"
+                            class="card-link"><i class="fab fa-github"></i> Source Code</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PROJECT 2 -->
+            <div class="proj-card" data-cat="frontend" data-aos="fade-up" data-aos-delay="80">
+                <div class="card-screen">
+                    <div class="card-browser">
+                        <div class="card-browser-bar">
+                            <span class="cb-dot" style="background:#ff5f57"></span>
+                            <span class="cb-dot" style="background:#febc2e"></span>
+                            <span class="cb-dot" style="background:#28c840"></span>
+                            <span class="cb-url">gdba.in</span>
+                            <span class="cb-secure"><i class="fas fa-lock" style="font-size:.5rem"></i> Secure</span>
+                        </div>
+                    </div>
+                    <div class="card-img-wrap">
+                        <img src="../assets/projects/Project2.png" alt="GDBA"
+                            onerror="this.parentElement.innerHTML='<div class=\'card-img-placeholder\'>&#127944; gdba.in</div>'" />
+                        <div class="card-overlay">
+                            <a href="https://www.gdba.in" target="_blank" class="ov-btn live"><i
+                                    class="fas fa-external-link-alt"></i> Live</a>
+                            <a href="https://github.com/theAman30/gdba.in" target="_blank" class="ov-btn code"><i
+                                    class="fab fa-github"></i> Code</a>
+                        </div>
+                        <span class="status-badge status-live">&#9679; Live</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="card-meta">
+                        <span class="card-num">02</span>
+                        <span class="card-cat">Frontend</span>
+                    </div>
+                    <div class="card-title">Ghaziabad District Boxing Association</div>
+                    <p class="card-desc">Official website for GDBA featuring player profiles, tournament schedules,
+                        event listings, and a responsive interactive gallery. Built for a real sports organization.</p>
+                    <div class="card-tags">
+                        <span class="ctag">HTML5</span><span class="ctag">Tailwind CSS</span><span
+                            class="ctag">JavaScript</span><span class="ctag">Responsive</span>
+                    </div>
+                    <div class="card-links">
+                        <a href="https://www.gdba.in" target="_blank" class="card-link"><i
+                                class="fas fa-external-link-alt"></i> Live Site</a>
+                        <a href="https://github.com/theAman30/gdba.in" target="_blank" class="card-link"><i
+                                class="fab fa-github"></i> Source Code</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PROJECT 3 — Coming Soon -->
+            <div class="proj-card" data-cat="frontend,wip" data-aos="fade-up" data-aos-delay="160">
+                <div class="card-screen">
+                    <div class="card-browser">
+                        <div class="card-browser-bar">
+                            <span class="cb-dot" style="background:#ff5f57"></span>
+                            <span class="cb-dot" style="background:#febc2e"></span>
+                            <span class="cb-dot" style="background:#28c840"></span>
+                            <span class="cb-url">private.client — confidential</span>
+                        </div>
+                    </div>
+                    <div class="card-img-wrap">
+                        <img src="../assets/project3.png" alt="Client Project"
+                            onerror="this.parentElement.innerHTML='<div class=\'card-img-placeholder\'>&#128274; confidential</div>'" />
+                        <div class="card-overlay">
+                            <span class="ov-btn disabled"><i class="fas fa-lock"></i> Not Live Yet</span>
+                        </div>
+                        <span class="coming-badge">Coming Soon</span>
+                        <span class="status-badge status-wip">&#9679; In Progress</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="card-meta">
+                        <span class="card-num">03</span>
+                        <span class="card-cat">Frontend</span>
+                    </div>
+                    <div class="card-title">Client Project (Under Development)</div>
+                    <p class="card-desc">A fully responsive, modern website for a client currently under NDA. Features
+                        dynamic layouts, smooth animations, and a custom CMS. Launch imminent — stay tuned.</p>
+                    <div class="card-tags">
+                        <span class="ctag">Frontend</span><span class="ctag">UI/UX</span><span
+                            class="ctag">Responsive</span><span class="ctag">Animation</span>
+                    </div>
+                    <div class="card-links">
+                        <a class="card-link disabled"><i class="fas fa-clock"></i> Launching Soon</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PROJECT 4 — Portfolio OS (Meta) -->
+            <div class="proj-card" data-cat="frontend,fullstack" data-aos="fade-up">
+                <div class="card-screen">
+                    <div class="card-browser">
+                        <div class="card-browser-bar">
+                            <span class="cb-dot" style="background:#ff5f57"></span>
+                            <span class="cb-dot" style="background:#febc2e"></span>
+                            <span class="cb-dot" style="background:#28c840"></span>
+                            <span class="cb-url">aman.dev — this site</span>
+                            <span class="cb-secure"><i class="fas fa-lock" style="font-size:.5rem"></i> Secure</span>
+                        </div>
+                    </div>
+                    <div class="card-img-wrap"
+                        style="background:#0b0f1a;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center">
+                        <div
+                            style="font-family:var(--font-mono);font-size:.72rem;color:var(--muted);text-align:center;padding:1rem">
+                            <div style="color:var(--orange);font-size:1.5rem;margin-bottom:.5rem">&#9670;</div>
+                            <div>AmanOS Portfolio</div>
+                            <div style="font-size:.6rem;margin-top:.25rem;color:rgba(100,116,139,.5)">you're looking at
+                                it</div>
+                        </div>
+                        <div class="card-overlay">
+                            <a href="../index.html" class="ov-btn live"><i class="fas fa-external-link-alt"></i>
+                                View</a>
+                        </div>
+                        <span class="status-badge status-live">&#9679; Live</span>
+                        <span class="featured-badge">&#9733; Featured</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="card-meta">
+                        <span class="card-num">04</span>
+                        <span class="card-cat">Frontend</span>
+                    </div>
+                    <div class="card-title">AmanOS — Developer Portfolio</div>
+                    <p class="card-desc">An OS-themed developer portfolio with a macOS-inspired dock, terminal skill
+                        windows, laptop screen project cards, and a Finder-style services browser. Built from scratch —
+                        no templates.</p>
+                    <div class="card-tags">
+                        <span class="ctag">HTML5</span><span class="ctag">CSS3</span><span
+                            class="ctag">JavaScript</span><span class="ctag">GSAP</span><span class="ctag">AOS</span>
+                    </div>
+                    <div class="card-links">
+                        <a href="../index.html" class="card-link"><i class="fas fa-external-link-alt"></i> Live Site</a>
+                        <a href="https://github.com/theAman30" target="_blank" class="card-link"><i
+                                class="fab fa-github"></i> GitHub</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PROJECT 5 — DSA / Algo project placeholder -->
+            <div class="proj-card" data-cat="fullstack" data-aos="fade-up" data-aos-delay="80">
+                <div class="card-screen">
+                    <div class="card-browser">
+                        <div class="card-browser-bar">
+                            <span class="cb-dot" style="background:#ff5f57"></span>
+                            <span class="cb-dot" style="background:#febc2e"></span>
+                            <span class="cb-dot" style="background:#28c840"></span>
+                            <span class="cb-url">localhost:3000 — dev build</span>
+                        </div>
+                    </div>
+                    <div class="card-img-wrap"
+                        style="background:#0d1520;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;position:relative">
+                        <div
+                            style="font-family:var(--font-mono);font-size:.72rem;color:var(--muted);text-align:left;padding:1.25rem;line-height:1.8;width:100%">
+                            <div><span style="color:#c084fc">const</span> <span style="color:#60a5fa">app</span> = <span
+                                    style="color:#c084fc">require</span>(<span style="color:#86efac">'express'</span>);
+                            </div>
+                            <div><span style="color:#c084fc">const</span> mongoose = <span
+                                    style="color:#c084fc">require</span>(<span style="color:#86efac">'mongoose'</span>);
+                            </div>
+                            <div style="color:#4b5563;font-style:italic">// REST API — v2</div>
+                            <div><span style="color:#60a5fa">app</span>.listen(<span style="color:#fb923c">5000</span>);
+                            </div>
+                        </div>
+                        <div class="card-overlay">
+                            <a href="https://github.com/theAman30" target="_blank" class="ov-btn code"><i
+                                    class="fab fa-github"></i> GitHub</a>
+                        </div>
+                        <span class="status-badge status-live">&#9679; Live</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="card-meta">
+                        <span class="card-num">05</span>
+                        <span class="card-cat">Full Stack</span>
+                    </div>
+                    <div class="card-title">REST API — Task Manager</div>
+                    <p class="card-desc">A full-featured RESTful API for task management with JWT authentication,
+                        role-based access control, and MongoDB Atlas integration. Production-ready with Postman docs.
+                    </p>
+                    <div class="card-tags">
+                        <span class="ctag">Node.js</span><span class="ctag">Express</span><span
+                            class="ctag">MongoDB</span><span class="ctag">JWT</span><span class="ctag">REST API</span>
+                    </div>
+                    <div class="card-links">
+                        <a href="https://github.com/theAman30" target="_blank" class="card-link"><i
+                                class="fab fa-github"></i> Source Code</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PROJECT 6 — Coming Soon / WIP -->
+            <div class="proj-card" data-cat="fullstack,wip" data-aos="fade-up" data-aos-delay="160">
+                <div class="card-screen">
+                    <div class="card-browser">
+                        <div class="card-browser-bar">
+                            <span class="cb-dot" style="background:#ff5f57"></span>
+                            <span class="cb-dot" style="background:#febc2e"></span>
+                            <span class="cb-dot" style="background:#28c840"></span>
+                            <span class="cb-url">upcoming.project</span>
+                        </div>
+                    </div>
+                    <div class="card-img-wrap"
+                        style="background:#0d1117;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;position:relative">
+                        <div style="text-align:center;font-family:var(--font-mono)">
+                            <div style="font-size:2rem;margin-bottom:.5rem">&#128640;</div>
+                            <div style="font-size:.7rem;color:var(--muted)">Next project loading...</div>
+                            <div style="margin-top:.75rem;display:flex;gap:.3rem;justify-content:center">
+                                <div
+                                    style="width:6px;height:6px;border-radius:50%;background:var(--orange);animation:dot1 1.2s infinite">
+                                </div>
+                                <div
+                                    style="width:6px;height:6px;border-radius:50%;background:var(--orange);animation:dot1 1.2s infinite .2s;opacity:.6">
+                                </div>
+                                <div
+                                    style="width:6px;height:6px;border-radius:50%;background:var(--orange);animation:dot1 1.2s infinite .4s;opacity:.3">
+                                </div>
+                            </div>
+                        </div>
+                        <span class="coming-badge">Coming Soon</span>
+                        <span class="status-badge status-wip">&#9679; In Progress</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="card-meta">
+                        <span class="card-num">06</span>
+                        <span class="card-cat">Full Stack</span>
+                    </div>
+                    <div class="card-title">Upcoming Full Stack Project</div>
+                    <p class="card-desc">Currently in active development. A full-stack application with React frontend,
+                        Node.js backend, and real-time features. Details dropping soon.</p>
+                    <div class="card-tags">
+                        <span class="ctag">React</span><span class="ctag">Node.js</span><span
+                            class="ctag">Socket.io</span><span class="ctag">MongoDB</span>
+                    </div>
+                    <div class="card-links">
+                        <a class="card-link disabled"><i class="fas fa-clock"></i> In Development</a>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- end grid -->
+
+        <!-- CTA strip -->
+        <div style="margin-top:4rem;padding:2.5rem;background:var(--os-window);border:1px solid rgba(255,118,19,.12);border-radius:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem"
+            data-aos="fade-up">
+            <div>
+                <div
+                    style="font-family:var(--font-head);font-size:1.3rem;font-weight:700;color:var(--text);margin-bottom:.4rem">
+                    Have a project in mind?</div>
+                <div style="font-size:.88rem;color:var(--muted)">Let's build something great together. I'm available for
+                    freelance work.</div>
+            </div>
+            <a href="../index.html#contact"
+                style="display:inline-flex;align-items:center;gap:.5rem;padding:.75rem 1.75rem;border-radius:10px;background:var(--orange);color:#0b0f1a;font-family:var(--font-mono);font-size:.82rem;font-weight:700;transition:background .2s,transform .2s;flex-shrink:0"
+                onmouseover="this.style.background='#ff9a4d';this.style.transform='translateY(-2px)'"
+                onmouseout="this.style.background='#ff7613';this.style.transform=''">
+                <i class="fas fa-terminal"></i> Let's Talk
+            </a>
+        </div>
+
+    </div><!-- end page -->
+
+    <!-- dock -->
+    <nav id="dock">
+        <a class="dock-it" href="../index.html" data-tip="Home"><i class="fas fa-house"></i></a>
+        <a class="dock-it" href="../index.html#skills" data-tip="Skills"><i class="fas fa-terminal"></i></a>
+        <a class="dock-it active" href="#" data-tip="Projects"><i class="fas fa-laptop-code"></i></a>
+        <div class="dock-sep"></div>
+        <a class="dock-it" href="../index.html#services" data-tip="Services"><i class="fas fa-folder-open"></i></a>
+        <a class="dock-it" href="../index.html#experience" data-tip="Experience"><i class="fas fa-scroll"></i></a>
+        <a class="dock-it" href="../index.html#about" data-tip="About"><i class="fas fa-user"></i></a>
+        <a class="dock-it" href="../index.html#contact" data-tip="Contact"><i class="fas fa-envelope"></i></a>
+        <div class="dock-sep"></div>
+        <a class="dock-it" href="https://github.com/theAman30" target="_blank" data-tip="GitHub"><i
+                class="fab fa-github"></i></a>
+        <a class="dock-it" href="https://www.linkedin.com/in/aman-srivastava-ab6820233/" target="_blank"
+            data-tip="LinkedIn"><i class="fab fa-linkedin"></i></a>
+    </nav>
+
+    <style>
+        @keyframes dot1 {
+
+            0%,
+            100% {
+                transform: translateY(0)
+            }
+
+            50% {
+                transform: translateY(-5px)
+            }
+        }
+    </style>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 700, once: true, offset: 40 });
+
+        /* clock */
+        function tick() { const n = new Date(); document.getElementById('topTime').textContent = n.getHours().toString().padStart(2, '0') + ':' + n.getMinutes().toString().padStart(2, '0'); }
+        tick(); setInterval(tick, 10000);
+
+        /* cursor */
+        const cDot = document.getElementById('cDot'), cRing = document.getElementById('cRing');
+        let mx = 0, my = 0, rx = 0, ry = 0;
+        document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+        (function loop() { cDot.style.left = mx + 'px'; cDot.style.top = my + 'px'; rx += (mx - rx) * .14; ry += (my - ry) * .14; cRing.style.left = rx + 'px'; cRing.style.top = ry + 'px'; requestAnimationFrame(loop); })();
+
+        /* filter */
+        const cards = [...document.querySelectorAll('.proj-card')];
+        const totalEl = document.getElementById('totalCount');
+        const showEl = document.getElementById('showCount');
+
+        function updateCounts() {
+            const visible = cards.filter(c => c.getAttribute('data-hide') !== 'true').length;
+            showEl.textContent = visible;
+        }
+        totalEl.textContent = cards.length;
+        showEl.textContent = cards.length;
+
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const f = btn.dataset.filter;
+                cards.forEach(c => {
+                    const cats = c.dataset.cat || '';
+                    const show = f === 'all' || cats.split(',').includes(f);
+                    c.setAttribute('data-hide', show ? 'false' : 'true');
+                    if (show) { gsap.fromTo(c, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: .35, ease: 'power2.out' }); }
+                });
+                updateCounts();
+            });
+        });
+
+        /* entrance */
+        gsap.from('.page-header', { opacity: 0, y: 30, duration: .7, delay: .2, ease: 'power2.out' });
+        gsap.from('.stats-row', { opacity: 0, y: 20, duration: .6, delay: .35, ease: 'power2.out' });
+        gsap.from('.filter-bar', { opacity: 0, y: 20, duration: .5, delay: .45, ease: 'power2.out' });
+    </script>
+</body>
+
+</html>
