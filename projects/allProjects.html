@@ -1,0 +1,1393 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description"
+        content="All Projects by Aman Srivastava — Full Stack Developer. Browse every build: e-commerce, corporate, and custom web applications." />
+    <meta name="keywords"
+        content="Aman Srivastava projects, full stack developer portfolio, React projects, Node.js projects, web development India" />
+    <meta name="author" content="Aman Srivastava" />
+    <meta property="og:title" content="Projects — Aman Srivastava" />
+    <meta property="og:description"
+        content="Full Stack Developer projects — React, Node.js, Django, MongoDB and more." />
+    <meta property="og:type" content="website" />
+    <title>Projects — Aman Srivastava | Full Stack Developer</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+
+    <style>
+        /* ── TOKENS ── */
+        :root {
+            --bg: #080c12;
+            --surface: #0e1520;
+            --surface2: #141d2e;
+            --border: rgba(255, 118, 19, .15);
+            --border-sub: rgba(255, 255, 255, .06);
+            --orange: #ff7613;
+            --orange2: #ff9a4d;
+            --orange-dim: rgba(255, 118, 19, .12);
+            --text: #e2e8f0;
+            --muted: #64748b;
+            --white: #f8fafc;
+            --green: #22c55e;
+            --cyan: #22d3ee;
+            --blue: #3b82f6;
+            --font-head: 'Syne', sans-serif;
+            --font-body: 'DM Sans', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        /* ── RESET ── */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--orange);
+            border-radius: 4px;
+        }
+
+        /* ── CURSOR ── */
+        .cursor-dot {
+            width: 7px;
+            height: 7px;
+            background: var(--orange);
+            border-radius: 50%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+        }
+
+        .cursor-ring {
+            width: 32px;
+            height: 32px;
+            border: 1.5px solid var(--orange);
+            border-radius: 50%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 9998;
+            transform: translate(-50%, -50%);
+            opacity: .5;
+            transition: width .15s, height .15s;
+        }
+
+        /* ── NOISE ── */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            opacity: .022;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ── GRID BG ── */
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: linear-gradient(rgba(255, 118, 19, .025) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 118, 19, .025) 1px, transparent 1px);
+            background-size: 48px 48px;
+            mask-image: radial-gradient(ellipse 80% 80% at 50% 20%, black, transparent);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ────────────────────────────
+           NAVBAR  */
+        #navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 500;
+            padding: 0 2rem;
+            background: var(--bg);
+            border-bottom: 1px solid var(--border-sub);
+            transition: background .35s, backdrop-filter .35s, border-color .35s;
+        }
+
+        #navbar.scrolled {
+            background: rgba(8, 12, 18, .9);
+            backdrop-filter: blur(20px);
+            border-bottom-color: var(--border);
+        }
+
+        .nav-inner {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 72px;
+            gap: 2rem;
+        }
+
+        /* Logo */
+        .nav-logo {
+            font-family: var(--font-head);
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -.02em;
+            background: linear-gradient(to right, #ff7613, #e65c00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-logo span {
+            background: linear-gradient(to right, var(--text), var(--muted));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Desktop links */
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            list-style: none;
+            margin-left: auto;
+        }
+
+        .nav-links a {
+            font-size: .875rem;
+            font-weight: 500;
+            color: var(--muted);
+            letter-spacing: .04em;
+            text-transform: uppercase;
+            position: relative;
+            transition: color .3s;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            height: 1px;
+            width: 0;
+            background: var(--orange);
+            transition: width .3s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--white);
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .nav-cta {
+            margin-left: 1rem;
+            padding: .6rem 1.5rem;
+            border: 1px solid var(--orange) !important;
+            color: var(--orange) !important;
+            border-radius: 99px;
+            font-size: .85rem !important;
+            font-weight: 600 !important;
+            transition: background .3s, color .3s !important;
+        }
+
+        .nav-cta::after {
+            display: none !important;
+        }
+
+        .nav-cta:hover {
+            background: var(--orange) !important;
+            color: var(--bg) !important;
+        }
+
+        /* Mobile */
+        #menu-btn {
+            display: none;
+            margin-left: auto;
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 1.5rem;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        #mobile-menu {
+            display: none;
+            background: var(--surface);
+            border-top: 1px solid var(--border-sub);
+        }
+
+        #mobile-menu.open {
+            display: block;
+        }
+
+        #mobile-menu a {
+            display: block;
+            padding: .8rem 2rem;
+            font-size: .95rem;
+            color: var(--muted);
+            border-bottom: 1px solid var(--border-sub);
+            transition: color .2s, background .2s;
+        }
+
+        #mobile-menu a:hover {
+            color: var(--orange);
+            background: var(--orange-dim);
+        }
+
+        /* ── PAGE WRAP ── */
+        .page-wrap {
+            position: relative;
+            z-index: 1;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 6.5rem 2rem 5rem;
+        }
+
+        /* ── HERO STRIP ── */
+        .page-hero {
+            position: relative;
+            overflow: hidden;
+            background: var(--surface);
+            border: 1px solid var(--border-sub);
+            border-radius: 20px;
+            padding: 3.5rem 3rem;
+            margin-bottom: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .page-hero::before {
+            content: '';
+            position: absolute;
+            right: -60px;
+            top: -60px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255, 118, 19, .1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .page-hero::after {
+            content: '';
+            position: absolute;
+            left: -40px;
+            bottom: -40px;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(255, 118, 19, .06) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: .4rem;
+            font-family: var(--font-mono);
+            font-size: .7rem;
+            color: var(--muted);
+            margin-bottom: 1rem;
+        }
+
+        .breadcrumb a {
+            color: var(--orange);
+            transition: opacity .2s;
+        }
+
+        .breadcrumb a:hover {
+            opacity: .7;
+        }
+
+        .breadcrumb .sep {
+            color: rgba(100, 116, 139, .35);
+        }
+
+        .page-title {
+            font-family: var(--font-head);
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            color: var(--white);
+            line-height: 1.1;
+            letter-spacing: -.03em;
+        }
+
+        .page-title .acc {
+            color: var(--orange);
+        }
+
+        .page-sub {
+            margin-top: .75rem;
+            color: var(--muted);
+            font-size: .95rem;
+            line-height: 1.75;
+            max-width: 480px;
+        }
+
+        .hero-stats-row {
+            display: flex;
+            gap: 2.5rem;
+            flex-shrink: 0;
+        }
+
+        .hs-item {
+            text-align: center;
+        }
+
+        .hs-n {
+            font-family: var(--font-head);
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--orange);
+            line-height: 1;
+        }
+
+        .hs-l {
+            font-family: var(--font-mono);
+            font-size: .62rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: .07em;
+            margin-top: .25rem;
+        }
+
+        /* ── FILTER BAR ── */
+        .filter-bar {
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+        }
+
+        .filter-label {
+            font-family: var(--font-mono);
+            font-size: .65rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: .07em;
+            margin-right: .25rem;
+        }
+
+        .fb {
+            padding: .38rem 1rem;
+            border-radius: 99px;
+            font-family: var(--font-mono);
+            font-size: .75rem;
+            color: var(--muted);
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, .1);
+            cursor: pointer;
+            transition: all .25s;
+        }
+
+        .fb:hover {
+            color: var(--text);
+            border-color: rgba(255, 118, 19, .3);
+        }
+
+        .fb.active {
+            background: var(--orange-dim);
+            color: var(--orange);
+            border-color: rgba(255, 118, 19, .35);
+        }
+
+        .filter-count {
+            margin-left: auto;
+            font-family: var(--font-mono);
+            font-size: .68rem;
+            color: var(--muted);
+        }
+
+        .filter-count b {
+            color: var(--orange);
+            font-weight: 500;
+        }
+
+        /* ── PROJECT GRID ── */
+        .proj-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        /* FIX 1: Cards hidden by default via opacity:0 from GSAP but never shown when filter hides them */
+        /* Use display:none only via data-hidden attribute — NOT opacity */
+        .proj-card[data-hidden="true"] {
+            display: none !important;
+        }
+
+        /* ── LAPTOP CARD — FIX 3: Added background, border, border-radius for the box look ── */
+        .proj-card {
+            display: flex;
+            flex-direction: column;
+            /* BOX STYLING — this is what was missing */
+            background: var(--surface);
+            border: 1px solid var(--border-sub);
+            border-radius: 16px;
+            overflow: hidden;
+            /* Transition for hover */
+            transition: transform .35s cubic-bezier(.4, 0, .2, 1), border-color .35s, box-shadow .35s;
+        }
+
+        .proj-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--orange);
+            box-shadow: 0 24px 60px rgba(0, 0, 0, .5), 0 0 0 1px rgba(255, 118, 19, .08);
+        }
+
+        /* Laptop frame */
+        .laptop-frame {
+            background: linear-gradient(135deg, #1c2230, #111827);
+            border-bottom: 1px solid rgba(255, 255, 255, .06);
+            padding: 8px 8px 0;
+        }
+
+        .laptop-screen {
+            background: #090d14;
+            border-radius: 5px 5px 0 0;
+            overflow: hidden;
+            aspect-ratio: 16/9;
+            border: 1px solid rgba(255, 118, 19, .1);
+            border-bottom: none;
+        }
+
+        .ls-bar {
+            background: #0d1117;
+            padding: .35rem .65rem;
+            display: flex;
+            align-items: center;
+            gap: .35rem;
+        }
+
+        .ls-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .ls-url {
+            margin-left: .4rem;
+            font-family: var(--font-mono);
+            font-size: .57rem;
+            color: var(--muted);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            flex: 1;
+        }
+
+        .ls-secure {
+            font-family: var(--font-mono);
+            font-size: .55rem;
+            color: var(--green);
+            display: flex;
+            align-items: center;
+            gap: .2rem;
+            flex-shrink: 0;
+        }
+
+        .ls-content {
+            position: relative;
+            height: 165px;
+            overflow: hidden;
+        }
+
+        .proj-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform .5s ease;
+        }
+
+        .proj-card:hover .proj-img {
+            transform: scale(1.06);
+        }
+
+        .img-placeholder {
+            width: 100%;
+            height: 100%;
+            background: var(--surface2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-mono);
+            font-size: .7rem;
+            color: var(--muted);
+        }
+
+        /* hover overlay */
+        .ls-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(8, 12, 18, 0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: .65rem;
+            opacity: 0;
+            transition: background .3s, opacity .3s;
+        }
+
+        .proj-card:hover .ls-overlay {
+            background: rgba(8, 12, 18, .65);
+            opacity: 1;
+        }
+
+        .ov-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: .4rem;
+            padding: .5rem 1.1rem;
+            border-radius: 8px;
+            font-family: var(--font-mono);
+            font-size: .72rem;
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+            transition: transform .2s, background .2s;
+        }
+
+        .ov-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .ov-primary {
+            background: var(--orange);
+            color: var(--bg);
+        }
+
+        .ov-primary:hover {
+            background: var(--orange2);
+        }
+
+        .ov-ghost {
+            background: rgba(255, 255, 255, .1);
+            color: var(--text);
+            border: 1px solid rgba(255, 255, 255, .15);
+        }
+
+        .ov-ghost:hover {
+            background: rgba(255, 255, 255, .2);
+        }
+
+        .ov-disabled {
+            background: rgba(255, 255, 255, .04);
+            color: var(--muted);
+            border: 1px solid rgba(255, 255, 255, .07);
+            cursor: not-allowed;
+        }
+
+        /* status pills */
+        .status-pill {
+            position: absolute;
+            font-family: var(--font-mono);
+            font-size: .58rem;
+            font-weight: 600;
+            letter-spacing: .06em;
+            padding: .2rem .65rem;
+            border-radius: 99px;
+        }
+
+        .sp-tl {
+            top: .55rem;
+            left: .55rem;
+        }
+
+        .sp-tr {
+            top: .55rem;
+            right: .55rem;
+        }
+
+        .sp-live {
+            background: rgba(34, 197, 94, .1);
+            color: #86efac;
+            border: 1px solid rgba(34, 197, 94, .2);
+        }
+
+        .sp-wip {
+            background: rgba(251, 191, 36, .08);
+            color: #fcd34d;
+            border: 1px solid rgba(251, 191, 36, .18);
+        }
+
+        .sp-soon {
+            background: rgba(34, 211, 238, .07);
+            color: var(--cyan);
+            border: 1px solid rgba(34, 211, 238, .2);
+            animation: spulse 2s ease-in-out infinite;
+        }
+
+        .sp-feat {
+            background: rgba(255, 118, 19, .1);
+            color: var(--orange2);
+            border: 1px solid rgba(255, 118, 19, .22);
+        }
+
+        @keyframes spulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: .45;
+            }
+        }
+
+        /* card info area — inside the box */
+        .card-info {
+            padding: 1.5rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-meta {
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+            margin-bottom: .65rem;
+        }
+
+        .card-num {
+            font-family: var(--font-mono);
+            font-size: .6rem;
+            color: rgba(255, 118, 19, .35);
+        }
+
+        .card-cat {
+            font-family: var(--font-mono);
+            font-size: .58rem;
+            color: var(--muted);
+            background: rgba(255, 255, 255, .04);
+            padding: .12rem .5rem;
+            border-radius: 4px;
+            border: 1px solid rgba(255, 255, 255, .07);
+        }
+
+        .card-title {
+            font-family: var(--font-head);
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: .5rem;
+            line-height: 1.25;
+        }
+
+        .card-desc {
+            font-size: .84rem;
+            color: var(--muted);
+            line-height: 1.65;
+            flex: 1;
+            margin-bottom: 1rem;
+        }
+
+        .card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .35rem;
+            margin-bottom: 1rem;
+        }
+
+        .ctag {
+            padding: .22rem .65rem;
+            border-radius: 99px;
+            font-family: var(--font-mono);
+            font-size: .62rem;
+            background: rgba(255, 118, 19, .07);
+            color: var(--orange2);
+            border: 1px solid rgba(255, 118, 19, .14);
+            transition: background .2s;
+        }
+
+        .ctag:hover {
+            background: rgba(255, 118, 19, .18);
+        }
+
+        .card-links {
+            display: flex;
+            gap: 1.1rem;
+            border-top: 1px solid rgba(255, 255, 255, .05);
+            padding-top: 1rem;
+            margin-top: auto;
+        }
+
+        .clink {
+            display: inline-flex;
+            align-items: center;
+            gap: .35rem;
+            font-size: .75rem;
+            font-weight: 600;
+            color: var(--orange);
+            transition: color .2s, transform .18s;
+            font-family: var(--font-mono);
+        }
+
+        .clink:hover {
+            color: var(--orange2);
+            transform: translateX(2px);
+        }
+
+        .clink.off {
+            color: var(--muted);
+            pointer-events: none;
+        }
+
+        /* ── CTA STRIP ── */
+        .cta-strip {
+            margin-top: 4rem;
+            padding: 2.5rem 3rem;
+            background: var(--surface);
+            border: 1px solid var(--border-sub);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-strip::before {
+            content: '';
+            position: absolute;
+            right: -60px;
+            top: -60px;
+            width: 220px;
+            height: 220px;
+            background: radial-gradient(circle, rgba(255, 118, 19, .1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .cta-strip h3 {
+            font-family: var(--font-head);
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: .35rem;
+        }
+
+        .cta-strip p {
+            font-size: .88rem;
+            color: var(--muted);
+        }
+
+        .btn-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: .55rem;
+            padding: .8rem 1.9rem;
+            background: var(--orange);
+            color: var(--bg);
+            font-weight: 700;
+            font-size: .88rem;
+            border-radius: 99px;
+            border: none;
+            cursor: pointer;
+            transition: background .25s, transform .25s, box-shadow .25s;
+            flex-shrink: 0;
+            font-family: var(--font-body);
+        }
+
+        .btn-cta:hover {
+            background: var(--orange2);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(255, 118, 19, .38);
+        }
+
+        /* ────────────────────────────
+           FOOTER — Aman Signature
+        ──────────────────────────── */
+        #footer {
+            background: #0f172a;
+            color: var(--muted);
+            padding: 2.5rem 2rem;
+            border-top: 1px solid rgba(255, 255, 255, .06);
+        }
+
+        .footer-inner {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-brand {
+            font-family: var(--font-head);
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--orange);
+        }
+
+        .footer-copy {
+            font-size: .8rem;
+            color: var(--muted);
+        }
+
+        .footer-copy a {
+            color: var(--orange);
+        }
+
+        .footer-socials {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .footer-socials a {
+            color: var(--muted);
+            font-size: 1rem;
+            transition: color .25s, transform .25s;
+        }
+
+        .footer-socials a:hover {
+            color: var(--orange);
+            transform: translateY(-2px);
+        }
+
+        /* ── RESPONSIVE ── */
+        @media(max-width:1024px) {
+            .proj-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media(max-width:900px) {
+            .nav-links {
+                display: none;
+            }
+
+            #menu-btn {
+                display: block;
+            }
+
+            .hero-stats-row {
+                gap: 1.5rem;
+            }
+
+            .page-hero {
+                padding: 2.5rem 2rem;
+            }
+        }
+
+        @media(max-width:640px) {
+            .proj-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-count {
+                display: none;
+            }
+
+            .cta-strip {
+                padding: 2rem 1.5rem;
+            }
+
+            .hero-stats-row {
+                gap: 1rem;
+            }
+        }
+
+        @media(max-width:480px) {
+            .page-wrap {
+                padding: 5.5rem 1.25rem 4rem;
+            }
+
+            .page-hero {
+                padding: 2rem 1.5rem;
+            }
+        }
+
+        @keyframes ld {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="cursor-dot" id="cDot"></div>
+    <div class="cursor-ring" id="cRing"></div>
+
+    <!-- ── NAVBAR ── -->
+    <header id="navbar">
+        <div class="nav-inner">
+            <a href="../index.html" class="nav-logo">Aman<span>.</span></a>
+            <nav aria-label="Main navigation">
+                <ul class="nav-links">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../index.html#skills">Skills</a></li>
+                    <li><a href="#" class="active">Projects</a></li>
+                    <li><a href="../index.html#services">Services</a></li>
+                    <li><a href="../index.html#experience">Experience</a></li>
+                    <li><a href="../index.html#about">About</a></li>
+                    <li><a href="../index.html#contact" class="nav-cta">>_ Hire Me</a></li>
+                </ul>
+            </nav>
+            <button id="menu-btn" aria-label="Open mobile menu" aria-expanded="false">&#9776;</button>
+        </div>
+        <div id="mobile-menu" role="navigation" aria-label="Mobile navigation">
+            <a href="../index.html">Home</a>
+            <a href="../index.html#skills">Skills</a>
+            <a href="#">Projects</a>
+            <a href="../index.html#services">Services</a>
+            <a href="../index.html#experience">Experience</a>
+            <a href="../index.html#about">About</a>
+            <a href="../index.html#contact">Hire Me</a>
+        </div>
+    </header>
+
+    <main>
+        <div class="page-wrap">
+            <!-- ── HERO STRIP ── -->
+            <div class="page-hero">
+                <div class="hero-left">
+                    <nav aria-label="Breadcrumb" class="breadcrumb">
+                        <a href="../index.html">Home</a>
+                        <span class="sep">/</span>
+                        <span style="color:var(--text)">Projects</span>
+                    </nav>
+                    <h1 class="page-title">All <span class="acc">Projects</span></h1>
+                    <p class="page-sub">Every build - from client work to personal experiments. Each one a problem
+                        solved, a skill sharpened, a product shipped.</p>
+                </div>
+                <div class="hero-stats-row" aria-label="Project statistics">
+                    <div class="hs-item">
+                        <div class="hs-n" id="totalStat">6</div>
+                        <div class="hs-l">Total</div>
+                    </div>
+                    <div class="hs-item">
+                        <div class="hs-n" style="color:var(--green)">3</div>
+                        <div class="hs-l">Live</div>
+                    </div>
+                    <div class="hs-item">
+                        <div class="hs-n" style="color:var(--cyan)">2</div>
+                        <div class="hs-l">In Progress</div>
+                    </div>
+                    <div class="hs-item">
+                        <div class="hs-n">5+</div>
+                        <div class="hs-l">Tech Stacks</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── FILTER BAR ── -->
+            <div class="filter-bar" role="group" aria-label="Project filters">
+                <span class="filter-label">Filter:</span>
+                <button class="fb active" data-cat="all">All</button>
+                <button class="fb" data-cat="fullstack">Full Stack</button>
+                <button class="fb" data-cat="frontend">Frontend</button>
+                <button class="fb" data-cat="ecommerce">E-Commerce</button>
+                <button class="fb" data-cat="wip">In Progress</button>
+                <span class="filter-count">Showing <b id="showCount">6</b> projects</span>
+            </div>
+
+            <!-- ── PROJECTS GRID ── -->
+            <section aria-label="Projects listing">
+                <div class="proj-grid" id="projGrid">
+
+                    <!-- PROJECT 1 -->
+                    <article class="proj-card" data-cat="fullstack,ecommerce" data-aos="fade-up" data-aos-delay="0">
+                        <div class="laptop-frame">
+                            <div class="laptop-screen">
+                                <div class="ls-bar">
+                                    <span class="ls-dot" style="background:#ff5f57"></span>
+                                    <span class="ls-dot" style="background:#febc2e"></span>
+                                    <span class="ls-dot" style="background:#28c840"></span>
+                                    <span class="ls-url">himspices.com</span>
+                                    <span class="ls-secure"><i class="fas fa-lock" style="font-size:.48rem"></i>
+                                        Secure</span>
+                                </div>
+                                <div class="ls-content">
+                                    <img class="proj-img" src="../assets/projects/Project1.png"
+                                        alt="Himvati Foods e-commerce website" loading="lazy"
+                                        onerror="this.style.display='none';this.parentElement.innerHTML+='<div class=\'img-placeholder\'>&#127778; himvati foods</div>'" />
+                                    <div class="ls-overlay">
+                                        <a href="https://www.himspices.com" target="_blank" rel="noopener"
+                                            class="ov-btn ov-primary"><i class="fas fa-external-link-alt"></i> Live</a>
+                                        <a href="https://github.com/himvatifoods/Himvati-Foods-Pvt.-Ltd" target="_blank"
+                                            rel="noopener" class="ov-btn ov-ghost"><i class="fab fa-github"></i>
+                                            Code</a>
+                                    </div>
+                                    <span class="status-pill sp-tl sp-live">&#9679; Live</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-info">
+                            <div class="card-meta"><span class="card-num">01</span><span
+                                    class="card-cat">E-Commerce</span></div>
+                            <h2 class="card-title">Himvati Foods Pvt Ltd</h2>
+                            <p class="card-desc">Full-stack e-commerce platform for a spice brand. Dynamic product
+                                catalog, cart, admin panel, and WhatsApp order integration — serving real customers.</p>
+                            <div class="card-tags">
+                                <span class="ctag">React</span>
+                                <span class="ctag">Node.js</span>
+                                <span class="ctag">MongoDB</span>
+                                <span class="ctag">Express</span>
+                            </div>
+                            <div class="card-links">
+                                <a href="https://www.himspices.com" target="_blank" rel="noopener" class="clink"><i
+                                        class="fas fa-external-link-alt"></i> Live Site</a>
+                                <a href="https://github.com/himvatifoods/Himvati-Foods-Pvt.-Ltd" target="_blank"
+                                    rel="noopener" class="clink"><i class="fab fa-github"></i> Source Code</a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- PROJECT 2 -->
+                    <article class="proj-card" data-cat="frontend" data-aos="fade-up" data-aos-delay="100">
+                        <div class="laptop-frame">
+                            <div class="laptop-screen">
+                                <div class="ls-bar">
+                                    <span class="ls-dot" style="background:#ff5f57"></span>
+                                    <span class="ls-dot" style="background:#febc2e"></span>
+                                    <span class="ls-dot" style="background:#28c840"></span>
+                                    <span class="ls-url">gdba.in</span>
+                                    <span class="ls-secure"><i class="fas fa-lock" style="font-size:.48rem"></i>
+                                        Secure</span>
+                                </div>
+                                <div class="ls-content">
+                                    <img class="proj-img" src="../assets/projects/Project2.png"
+                                        alt="Ghaziabad District Boxing Association website" loading="lazy"
+                                        onerror="this.style.display='none';this.parentElement.innerHTML+='<div class=\'img-placeholder\'>&#127944; gdba.in</div>'" />
+                                    <div class="ls-overlay">
+                                        <a href="https://www.gdba.in" target="_blank" rel="noopener"
+                                            class="ov-btn ov-primary"><i class="fas fa-external-link-alt"></i> Live</a>
+                                        <a href="https://github.com/theAman30/gdba.in" target="_blank" rel="noopener"
+                                            class="ov-btn ov-ghost"><i class="fab fa-github"></i> Code</a>
+                                    </div>
+                                    <span class="status-pill sp-tl sp-live">&#9679; Live</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-info">
+                            <div class="card-meta"><span class="card-num">02</span><span
+                                    class="card-cat">Frontend</span></div>
+                            <h2 class="card-title">Ghaziabad District Boxing Association</h2>
+                            <p class="card-desc">Official GDBA website with player profiles, tournament schedules, event
+                                listings, and responsive interactive gallery. Built for a real sports organization.</p>
+                            <div class="card-tags">
+                                <span class="ctag">HTML5</span>
+                                <span class="ctag">Tailwind CSS</span>
+                                <span class="ctag">JavaScript</span>
+                            </div>
+                            <div class="card-links">
+                                <a href="https://www.gdba.in" target="_blank" rel="noopener" class="clink"><i
+                                        class="fas fa-external-link-alt"></i> Live Site</a>
+                                <a href="https://github.com/theAman30/gdba.in" target="_blank" rel="noopener"
+                                    class="clink"><i class="fab fa-github"></i> Source Code</a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- PROJECT 3 — Coming Soon -->
+                    <article class="proj-card" data-cat="frontend,wip" data-aos="fade-up" data-aos-delay="200">
+                        <div class="laptop-frame">
+                            <div class="laptop-screen">
+                                <div class="ls-bar">
+                                    <span class="ls-dot" style="background:#ff5f57"></span>
+                                    <span class="ls-dot" style="background:#febc2e"></span>
+                                    <span class="ls-dot" style="background:#28c840"></span>
+                                    <span class="ls-url">private.client — confidential</span>
+                                </div>
+                                <div class="ls-content">
+                                    <img class="proj-img" src="../assets/project3.png"
+                                        alt="Client project under development" loading="lazy"
+                                        onerror="this.style.display='none';this.parentElement.innerHTML+='<div class=\'img-placeholder\' style=\'background:#0d1520\'>&#128274; confidential</div>'" />
+                                    <div class="ls-overlay">
+                                        <span class="ov-btn ov-disabled"><i class="fas fa-lock"></i> Not Live Yet</span>
+                                    </div>
+                                    <span class="status-pill sp-tl sp-wip">&#9679; In Progress</span>
+                                    <span class="status-pill sp-tr sp-soon">Coming Soon</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-info">
+                            <div class="card-meta"><span class="card-num">03</span><span
+                                    class="card-cat">Frontend</span></div>
+                            <h2 class="card-title">Client Project (Under Development)</h2>
+                            <p class="card-desc">A fully responsive, modern website for a client under NDA. Dynamic
+                                layouts, smooth animations, and custom CMS integration. Launch imminent.</p>
+                            <div class="card-tags">
+                                <span class="ctag">Frontend</span>
+                                <span class="ctag">UI/UX</span>
+                                <span class="ctag">Responsive</span>
+                                <span class="ctag">Animation</span>
+                            </div>
+                            <div class="card-links">
+                                <a class="clink off"><i class="fas fa-clock"></i> Launching Soon</a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- PROJECT 4 — Portfolio -->
+                    <article class="proj-card" data-cat="frontend,fullstack" data-aos="fade-up" data-aos-delay="0">
+                        <div class="laptop-frame">
+                            <div class="laptop-screen">
+                                <div class="ls-bar">
+                                    <span class="ls-dot" style="background:#ff5f57"></span>
+                                    <span class="ls-dot" style="background:#febc2e"></span>
+                                    <span class="ls-dot" style="background:#28c840"></span>
+                                    <span class="ls-url">aman.dev - you are here</span>
+                                    <span class="ls-secure"><i class="fas fa-lock" style="font-size:.48rem"></i>
+                                        Secure</span>
+                                </div>
+                                <div class="ls-content"
+                                    style="background:#080c12;display:flex;align-items:center;justify-content:center">
+                                    <div style="text-align:center;font-family:var(--font-mono)">
+                                        <div style="color:var(--orange);font-size:1.6rem;margin-bottom:.4rem">&#9670;
+                                        </div>
+                                        <div style="font-size:.7rem;color:var(--muted)">Aman Portfolio</div>
+                                        <div style="font-size:.58rem;color:rgba(100,116,139,.45);margin-top:.2rem">
+                                            you're looking at it</div>
+                                    </div>
+                                    <div class="ls-overlay">
+                                        <a href="../index.html" class="ov-btn ov-primary"><i
+                                                class="fas fa-external-link-alt"></i> View</a>
+                                    </div>
+                                    <span class="status-pill sp-tl sp-live">&#9679; Live</span>
+                                    <span class="status-pill sp-tr sp-feat">&#9733; Featured</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-info">
+                            <div class="card-meta"><span class="card-num">04</span><span
+                                    class="card-cat">Frontend</span></div>
+                            <h2 class="card-title">AmanOS — Developer Portfolio</h2>
+                            <p class="card-desc">OS-themed developer portfolio with macOS dock, terminal skill windows,
+                                laptop screen project mockups, and a Finder-style services browser. Built from scratch.
+                            </p>
+                            <div class="card-tags">
+                                <span class="ctag">HTML5</span>
+                                <span class="ctag">CSS3</span>
+                                <span class="ctag">JavaScript</span>
+                                <span class="ctag">GSAP</span>
+                                <span class="ctag">AOS</span>
+                            </div>
+                            <div class="card-links">
+                                <a href="../index.html" class="clink"><i class="fas fa-external-link-alt"></i> Live
+                                    Site</a>
+                                <a href="https://github.com/theAman30" target="_blank" rel="noopener" class="clink"><i
+                                        class="fab fa-github"></i> GitHub</a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- PROJECT 5 — REST API -->
+                    <article class="proj-card" data-cat="fullstack" data-aos="fade-up" data-aos-delay="100">
+                        <div class="laptop-frame">
+                            <div class="laptop-screen">
+                                <div class="ls-bar">
+                                    <span class="ls-dot" style="background:#ff5f57"></span>
+                                    <span class="ls-dot" style="background:#febc2e"></span>
+                                    <span class="ls-dot" style="background:#28c840"></span>
+                                    <span class="ls-url">localhost:5000 — dev</span>
+                                </div>
+                                <div class="ls-content"
+                                    style="background:#090d14;padding:1.25rem;display:flex;align-items:center">
+                                    <div style="font-family:var(--font-mono);font-size:.72rem;line-height:2;width:100%">
+                                        <div><span style="color:#c084fc">const</span> <span
+                                                style="color:#60a5fa">app</span> = <span
+                                                style="color:#c084fc">require</span>(<span
+                                                style="color:#86efac">'express'</span>);</div>
+                                        <div><span style="color:#c084fc">const</span> mongoose = <span
+                                                style="color:#c084fc">require</span>(<span
+                                                style="color:#86efac">'mongoose'</span>);</div>
+                                        <div style="color:#4b5563;font-style:italic">// JWT Auth — REST API v2</div>
+                                        <div><span style="color:#60a5fa">app</span>.listen(<span
+                                                style="color:#fb923c">5000</span>, () =&gt; <span
+                                                style="color:#86efac">'Running ✓'</span>);</div>
+                                    </div>
+                                    <div class="ls-overlay">
+                                        <a href="https://github.com/theAman30" target="_blank" rel="noopener"
+                                            class="ov-btn ov-ghost"><i class="fab fa-github"></i> Code</a>
+                                    </div>
+                                    <span class="status-pill sp-tl sp-live">&#9679; Live</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-info">
+                            <div class="card-meta"><span class="card-num">05</span><span class="card-cat">Full
+                                    Stack</span></div>
+                            <h2 class="card-title">REST API — Task Manager</h2>
+                            <p class="card-desc">Production-ready RESTful API for task management with JWT
+                                authentication, role-based access control, and MongoDB Atlas integration. Fully
+                                documented with Postman.</p>
+                            <div class="card-tags">
+                                <span class="ctag">Node.js</span>
+                                <span class="ctag">Express</span>
+                                <span class="ctag">MongoDB</span>
+                                <span class="ctag">JWT</span>
+                            </div>
+                            <div class="card-links">
+                                <a href="https://github.com/theAman30" target="_blank" rel="noopener" class="clink"><i
+                                        class="fab fa-github"></i> Source Code</a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- PROJECT 6 — Upcoming -->
+                    <article class="proj-card" data-cat="fullstack,wip" data-aos="fade-up" data-aos-delay="200">
+                        <div class="laptop-frame">
+                            <div class="laptop-screen">
+                                <div class="ls-bar">
+                                    <span class="ls-dot" style="background:#ff5f57"></span>
+                                    <span class="ls-dot" style="background:#febc2e"></span>
+                                    <span class="ls-dot" style="background:#28c840"></span>
+                                    <span class="ls-url">upcoming.build</span>
+                                </div>
+                                <div class="ls-content"
+                                    style="background:#0d1117;display:flex;align-items:center;justify-content:center">
+                                    <div style="text-align:center;font-family:var(--font-mono)">
+                                        <div style="font-size:2rem;margin-bottom:.5rem">&#128640;</div>
+                                        <div style="font-size:.7rem;color:var(--muted)">Next project loading...</div>
+                                        <div style="margin-top:.75rem;display:flex;gap:.4rem;justify-content:center">
+                                            <div
+                                                style="width:6px;height:6px;border-radius:50%;background:var(--orange);animation:ld 1.2s infinite">
+                                            </div>
+                                            <div
+                                                style="width:6px;height:6px;border-radius:50%;background:var(--orange);animation:ld 1.2s infinite .2s;opacity:.6">
+                                            </div>
+                                            <div
+                                                style="width:6px;height:6px;border-radius:50%;background:var(--orange);animation:ld 1.2s infinite .4s;opacity:.3">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <span class="status-pill sp-tl sp-wip">&#9679; In Progress</span>
+                                    <span class="status-pill sp-tr sp-soon">Coming Soon</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-info">
+                            <div class="card-meta"><span class="card-num">06</span><span class="card-cat">Full
+                                    Stack</span></div>
+                            <h2 class="card-title">Upcoming Full Stack Project</h2>
+                            <p class="card-desc">A full-stack application with React frontend, Node.js backend, and
+                                real-time features using Socket.io. Active development — details dropping soon.</p>
+                            <div class="card-tags">
+                                <span class="ctag">React</span>
+                                <span class="ctag">Node.js</span>
+                                <span class="ctag">Socket.io</span>
+                                <span class="ctag">MongoDB</span>
+                            </div>
+                            <div class="card-links">
+                                <a class="clink off"><i class="fas fa-clock"></i> In Development</a>
+                            </div>
+                        </div>
+                    </article>
+
+                </div><!-- /proj-grid -->
+            </section>
+
+            <!-- ── CTA STRIP ── -->
+            <div class="cta-strip">
+                <div>
+                    <h3>Have a project in mind?</h3>
+                    <p>Let's build something great together. I'm open for freelance work.</p>
+                </div>
+                <a href="../index.html#contact" class="btn-cta">
+                    <i class="fas fa-paper-plane"></i> Let's Talk
+                </a>
+            </div>
+
+        </div><!-- /page-wrap -->
+    </main>
+
+    <!-- ── FOOTER ── -->
+    <footer id="footer">
+        <div class="footer-inner">
+            <div class="footer-brand">Aman<span style="color:var(--muted)">.</span></div>
+            <div class="footer-copy">
+                &copy; <span id="year"></span> Aman Srivastava. Built with
+                <i class="fas fa-heart" style="color:var(--orange)"></i> &amp;
+                <i class="fas fa-mug-hot" style="color:var(--orange)"></i>
+            </div>
+            <div class="footer-socials">
+                <a href="https://github.com/theAman30" target="_blank" rel="noopener" aria-label="GitHub"><i
+                        class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/aman-srivastava-ab6820233/" target="_blank" rel="noopener"
+                    aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                <a href="mailto:theamansri30@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <!-- external js file linking  -->
+     <script src="./projects.js"></script>
+</body>
+
+</html>
