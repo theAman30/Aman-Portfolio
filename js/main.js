@@ -88,7 +88,7 @@
             once: true,
             onEnter: () => {
                 document.querySelectorAll('.stat-num').forEach((el, i) => {
-                    animateCounter(el, [2, 10, 5][i]);
+                    animateCounter(el, [1, 10, 5][i]);
                 });
             }
         });
